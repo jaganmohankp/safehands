@@ -1,0 +1,9 @@
+<topbar [sidenav]="sidenav" ></topbar>
+<mat-sidenav-container class="main-window">
+    <mat-sidenav #sidenav mode="side" opened="true" class="navigation-bar" >
+        <navigation></navigation>
+    </mat-sidenav>
+    <div class="main-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+</mat-sidenav-container>

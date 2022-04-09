@@ -1,0 +1,21 @@
+{
+    "status":"SUCCESS",
+    "message":null,
+    "result":{
+        "user": {
+            "id": "5a3f2c9089001767d08b4f41",
+            "username": "Bene1",
+            "password": "pass2000",
+            "usertype": "beneficiary",
+            "name": "Bene1",
+            "email": "bene1@gmail.com"
+        },
+        "numBeneficiary": 340,
+        "address": "11 Jalan Ubi Blk 6, 409074",
+        "score": 100,
+        "contactPerson": "Jack Lim",
+        "contactNumber": "91234567",
+        "memberType": "Elderly Care",
+        "hasTransport": false
+    }
+}

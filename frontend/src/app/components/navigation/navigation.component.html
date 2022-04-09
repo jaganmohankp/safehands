@@ -1,0 +1,16 @@
+<mat-nav-list>
+    <div class="navigation-main">
+        <span>MAIN</span>
+    </div>
+    <mat-list-item
+        *ngFor="let page of pages"
+        class="navigation-page"
+        routerLinkActive="router-active"
+        routerLink="{{ page.route }}"
+        tabindex="-1"
+        (click)="onNavigate(page.route)"
+    >
+        <span [class]="page.icon"></span>
+        <p class="navigation-item">{{ page.name }}</p>
+    </mat-list-item>
+</mat-nav-list>

@@ -1,0 +1,5 @@
+<mat-nav-list>
+    <mat-list-item *ngFor="let page of pages" routerLinkActive="router-active" routerLink="{{ page.route }}">
+        <h3  class="navigation-item">{{ page.name }}</h3>
+    </mat-list-item>
+</mat-nav-list>

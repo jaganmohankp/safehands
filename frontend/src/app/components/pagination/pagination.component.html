@@ -1,0 +1,30 @@
+<nav *ngIf="count > 0">
+    <div class="pull-left num-items">
+        Show
+        <label>
+            <div class="input-wrapper">
+                <select (change)="onPageSizeChange($event)" [value]="perPage">
+                    <option *ngFor="let numRows of perPageList.slice(0, -1)">{{ numRows }}</option>
+                    <option *ngIf="count > 50">{{ count }}</option>
+                </select>
+            </div>
+        </label>
+        items per page
+        <p>
+            <span>Showing {{ getMin() }} to</span>
+            <span>{{ getMax() }}</span>
+            <span>of {{ count }} items</span>
+        </p>
+    </div>
+    <ul class="pagination justify-content-end pull-right">
+        <li class="page-item" [ngClass]="{ 'disabled': page === 1 }">
+            <a class="page-link" (click)="onPrev()"><span class="fas fa-angle-left"></span> <span class="shorten">Prev</span> </a>
+        </li>
+        <li *ngFor="let pageNum of getPages()" class="page-item" [ngClass]="{ 'active' : page === pageNum }">
+            <a class="page-link" (click)="onPage(pageNum)">{{ pageNum }}</a>
+        </li>
+        <li class="page-item" [ngClass]="{ 'disabled': lastPage() }">
+            <a class="page-link" (click)="onNext()"><span class="shorten">Next</span> <span class="fas fa-angle-right"></span></a>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,112 @@
+<div *ngIf="window" class="col-md-12">
+    <div class="card">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-md-6 col-lg-4 dropdown">
+                    <div class="row">
+                        <div class="col-lg-3 pr-0">
+                            <label class="w-100">Category</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-wrapper">
+                                <select (change)="onSelectCategory($event)">
+                                    <option *ngFor="let cat of categories">
+                                        {{ cat }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 dropdown">
+                    <div class="row" *ngIf="classifications?.length !== 0">
+                        <div class="col-lg-3 pr-0">
+                            <label class="w-100">Classification</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-wrapper">
+                                <select
+                                    (change)="onSelectClassification($event)"
+                                    [disabled]="classifications?.length === 0"
+                                >
+                                    <option *ngFor="let cls of classifications">
+                                        {{ cls }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+                <div class="col-lg-3">
+                    <input type="text" class="searchbar pull-right" placeholder="Search" (keyup)="onFilter(true)" [(ngModel)]="criteria"/>
+                </div>
+            </div>
+            <div style="overflow-x:auto">
+                <table class="table req-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th *ngIf="selectedCategory === 'All'">Category</th>
+                            <th *ngIf="selectedClassification === 'All'">Classification</th>
+                            <th>Description</th>
+                            <th class="text-center">Measurement</th>
+                            <th class="text-center">Available Quantity</th>
+                            <th class="text-center">Request Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of pager.data">
+                            <td>{{ item.sn }}</td>
+                            <td *ngIf="selectedCategory === 'All'">{{ item.category }}</td>
+                            <td *ngIf="selectedClassification === 'All'">{{ item.classification }}</td>
+                            <td>{{ item.description | split:'-':'0' }}<span *ngIf="item.description.includes('Halal')"> ({{ item.description | split:'-':'2' }})</span></td>
+                            <td class="text-center">{{ item.description | split:'-':'1' }}</td>
+                            <td class="text-center">{{ item.availableQuantity }}</td>
+                            <td class="text-center modal-content">
+                                <div class="input-wrapper req-qty">
+                                    <select *ngIf="item"
+                                        [(ngModel)]="item.requestedQuantity"
+                                        [value]="item.requestedQuantity"
+                                        class="text-center"
+                                    >
+                                        <option *ngFor="let i of getNumArr(item.availableQuantity)">
+                                            {{ i }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-secondary btn-std req-action" (click)="onAdd(item)">
+                                    <span class="fas fa-cart-plus"></span>
+                                    <span class="shorten">Add</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="pager.data.length === 0">
+                            <td colspan="8" class="text-center"><strong>None</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <pagination
+                [count]="data?.length"
+                [page]="pager.page"
+                [pagesToShow]="pager.pagesToShow"
+                [perPage]="pager.pageSize"
+                (pageSizeChange)="pgSvc.loadPage(data, pager, $event)"
+                (goPrev)="pgSvc.prev(data, pager)"
+                (goNext)="pgSvc.next(data, pager)"
+                (goPage)="pgSvc.go(data, pager, $event)">
+            </pagination>
+        </div>
+    </div>
+</div>
+<div *ngIf="window !== undefined && !window" class="col-md-12">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title text-center">The window is closed at the moment. Please wait for the window to reopen to make food requests.</h4>
+        </div>
+    </div>
+</div>

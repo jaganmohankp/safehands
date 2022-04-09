@@ -1,0 +1,31 @@
+{
+    "stocktaking" : [
+        {
+            "qn" : "Where can i find the QR Code to scan",
+            "answer" : "Each product has a category, classification and description. Each description has their own unique QR code that are pasted on the shelf."
+        },
+        {
+            "qn" : "I can’t find the category/classification/description?",
+            "answer" : "answer"
+        },
+        {
+            "qn" : "Question 3?",
+            "answer" : "answer"
+        }
+    ],
+
+    "packing" : [
+        {
+            "qn" : "What if I cannot find sufficient stock?",
+            "answer" : "Pack according to what is available in stock and kindly inform our staff."
+        },
+        {
+            "qn" : "Question 2?",
+            "answer" : "answer"
+        },
+        {
+            "qn" : "Question 3?",
+            "answer" : "answer"
+        }
+    ]
+}

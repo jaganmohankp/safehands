@@ -1,0 +1,21 @@
+<mat-card class="heartbeat-card">
+    <div class="row">
+        <div class="col-sm-3">
+            <button class="btn btn-std heartbeat-start" (click)="onStart()">Start Testing</button>
+            <button class="btn btn-std heartbeat-start" (click)="onClear()">Clear Console</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-card class="console-card">
+                <ng-container *ngFor="let test of log">
+                    <span>{{ test.command }}</span>
+                    <span>{{ objToString(test.headers) }}</span>
+                    <br />
+                    <span [ngStyle]="{ 'color': getResultColor(test.body) }">{{ test.body }}</span>
+                    <br />
+                </ng-container>
+            </mat-card>
+        </div>
+    </div>
+</mat-card>

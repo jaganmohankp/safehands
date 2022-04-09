@@ -1,0 +1,75 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-lg-9"></div>
+                <div class="col-lg-3">
+                    <input placeholder="Search" [(ngModel)]="criteria" (keyup)="onFilter(true)" class="searchbar"/>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th colspan="5">Beneficiary</th>
+                            <th class="text-center">Status</th>
+                            <th colspan="2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let ben of pager.data;">
+                            <tr>
+                                <td>{{ ben.sn }}</td>
+                                <td colspan="5">{{ ben.name }}</td>
+                                <td class="allocation-status text-center">
+                                    <span [ngStyle]="ben.status === 'Pending' ? {'background-color':'#ffa824'} : {'background-color': '#5ab86f'}">{{ ben.status ? 'Completed' : 'Pending' }}</span>
+                                </td>
+                                <td >
+                                    <button class="pull-right" (click)="ben.toggle = !ben.toggle">
+                                        <span class="fas fa-fw fa-caret-down"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <ng-container *ngIf="ben.toggle">
+                                <tr class="trench"><td colspan="8"></td></tr>
+                                <tr class="nested-table-header">
+                                    <th class="trench"></th>
+                                    <th>Category</th>
+                                    <th>Classification</th>
+                                    <th>Description</th>
+                                    <th class="text-center">Measurement</th>
+                                    <th class="text-center">Allocated Quantity</th>
+                                    <th class="text-center">Packed Quantity</th>
+                                    <th class="trench"></th>
+                                </tr>
+                                <tr *ngFor="let item of ben.packedItems">
+                                    <td class="trench"></td>
+                                    <td>{{ item.category }}</td>
+                                    <td>{{ item.classification }}</td>
+                                    <td>{{ item.description | split:'-':'0' }}<span *ngIf="item.description.includes('Halal')"> ({{ item.description | split:'-':'2' }})</span></td>
+                                    <td class="text-center">{{ item.description | split:'-':'1' }}</td>
+                                    <td class="text-center">{{ item.allocatedQuantity }}</td>
+                                    <td class="text-center">{{ item.packedQuantity }}</td>
+                                    <td class="trench"></td>
+                                </tr>
+                                <tr><td colspan="8" class="trench"></td></tr>
+                            </ng-container>
+                        </ng-container>
+                        <tr *ngIf="pager.data.length === 0"><td class="text-center" colspan="8"><strong>None</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <pagination
+                [count]="data?.length"
+                [page]="pager.page"
+                [pagesToShow]="pager.pagesToShow"
+                [perPage]="pager.pageSize"
+                (pageSizeChange)="pgSvc.loadPage(data, pager, $event)"
+                (goPrev)="pgSvc.prev(data, pager)"
+                (goNext)="pgSvc.next(data, pager)"
+                (goPage)="pgSvc.go(data, pager, $event)">
+            </pagination>
+        </div>
+    </div>
+</div>

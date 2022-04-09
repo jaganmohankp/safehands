@@ -1,0 +1,8 @@
+<mat-progress-spinner
+    *ngIf="loading"
+    class="login-spinner"
+    mode="indeterminate"
+    color="primary"
+></mat-progress-spinner>
+<div *ngIf="loading" class="overlay"></div>
+<router-outlet></router-outlet>

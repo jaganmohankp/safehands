@@ -1,0 +1,54 @@
+{
+    "status":"SUCCESS",
+    "message":null,
+    "result":[
+        {
+            "category": "Dried Food",
+            "classification": "Other Dried Food",
+            "description": "RoastedChestnuts-250g",
+            "allocatedQuantity": 0,
+            "requestedQuantity": 1,
+            "inventoryQuantity": 1
+        },
+        {
+            "category": "Dried Food",
+            "classification": "Other Dried Food",
+            "description": "RoastedChestnuts-250g",
+            "allocatedQuantity": 0,
+            "requestedQuantity": 1,
+            "inventoryQuantity": 1
+        },
+        {
+            "category": "Dried Food",
+            "classification": "Other Dried Food",
+            "description": "RoastedChestnuts-250g",
+            "allocatedQuantity": 0,
+            "requestedQuantity": 1,
+            "inventoryQuantity": 1
+        },
+        {
+            "category": "Dried Food",
+            "classification": "Other Dried Food",
+            "description": "RoastedChestnuts-250g",
+            "allocatedQuantity": 0,
+            "requestedQuantity": 1,
+            "inventoryQuantity": 1
+        },
+        {
+            "category": "Dried Food",
+            "classification": "Other Dried Food",
+            "description": "RoastedChestnuts-250g",
+            "allocatedQuantity": 0,
+            "requestedQuantity": 1,
+            "inventoryQuantity": 1
+        },
+        {
+            "category": "Dried Food",
+            "classification": "Other Dried Food",
+            "description": "RoastedChestnuts-250g",
+            "allocatedQuantity": 0,
+            "requestedQuantity": 1,
+            "inventoryQuantity": 1
+        }
+    ]
+}

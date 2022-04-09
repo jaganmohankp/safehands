@@ -1,0 +1,13 @@
+{
+    "status":"SUCCESS",
+    "result":{
+        "windowStatus":true,
+        "windowStartDate":"2018-03-19",
+        "windowEndDate":"2018-03-21",
+        "multiplierRate":30.0,
+        "decayRate":10.0,
+        "dailyPassword":"WkJcBC3D",
+        "uniqueBeneficiaryCount":2
+    },
+    "message":"GET call for ADMIN is successful."
+}

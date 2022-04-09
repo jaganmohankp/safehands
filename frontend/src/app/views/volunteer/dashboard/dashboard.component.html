@@ -1,0 +1,28 @@
+<div class="row">
+    <p class="col-xs-6 col-md-8 page-title">
+        Dashboard
+    </p> 
+    <div class="col-xs-6 col-md-4 pull-right searchbar" >
+    
+    </div>
+</div>
+
+ <mat-input-container class="margin-333" style="width: 100%">
+            <input 
+        matInput 
+        placeholder="Type to filter all columns" 
+        value=""
+        (keyup)='updateFilter($event)'>
+    </mat-input-container>
+
+ <div class="mat-box-shadow margin-333">
+    <ngx-datatable class="material bg-white"
+    [columnMode]="'force'"  
+    [headerHeight]="50"
+    [footerHeight]="50" 
+    [rowHeight]="50"
+    [rows]="rows"
+    [limit]="10"
+    [columns]="columns">
+    </ngx-datatable>   
+</div>   

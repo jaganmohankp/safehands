@@ -1,0 +1,32 @@
+{
+    "status":"SUCCESS",
+    "result":[
+        {
+            "beneficiary":{
+                "usertype":"beneficiary",
+                "username":"bene",
+                "name":"bene",
+                "email":"louis.lim.2015@business.smu.edu.sg",
+                "numBeneficiary":100,
+                "address":"bene, 123112",
+                "score":100.0,
+                "contactPerson":"bene",
+                "contactNumber":"2123",
+                "memberType":"Elderly Care",
+                "hasTransport":true
+            },
+            "allocatedItems":[
+                {
+                    "category":"Snacks",
+                    "classification":"Biscuit/Crackers",
+                    "description":"Chips-50g",
+                    "inventoryQuantity":1,
+                    "requestedQuantity":1,
+                    "allocatedQuantity":1
+                }
+            ],
+            "approvalStatus":false
+        }
+    ],
+    "message":"GET call for ALLOCATION is successful."
+}

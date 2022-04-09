@@ -1,0 +1,28 @@
+.delivery-box {
+    padding-right: 50px;
+}
+
+.inv-num-list {
+    width: 100%;
+    height: 30px;
+    padding-left: 10px;
+    font-size: smaller;
+}
+
+.print {
+    margin-left: 20px;
+}
+
+.inv-header-table {
+    width: 100%;
+}
+
+.inv-header-table td {
+    width: 50%;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.inv-header-table button {
+    width: 100%;
+}

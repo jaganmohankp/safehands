@@ -1,0 +1,54 @@
+{
+    "status":"SUCCESS",
+    "message":null,
+    "result":{
+        "reportGenerated":false,
+        "deliveryRequired":true,
+        "invoiceNumber":"FBDO-2017-12-6204",
+        "packedDate":"13/12/2017",
+        "deliveryDate":"15/12/2017",
+        "deliveryTime":"12:12",
+        "issuedBy":"FB Admin",
+        "comments":"13th December Packing List",
+        "organizationToBill":"Infant Jesus Homes and Children's Centre",
+        "organizationToBillAddress":"503 Ang Mo Kio St 13 Singapore 569406",
+        "organizationToBillContactPerson":"Adeline",
+        "organizationToBillContactNumber":"+65 64594801",
+        "receivingOrganization":"Infant Jesus Homes and Children's Centre",
+        "receivingOrganizationAddress":"503 Ang Mo Kio St 13 Singapore 569406",
+        "receivingOrganizationContactPerson":"Adeline",
+        "receivingOrganizationContactNumber":"+65 64594801",
+        "combinedTotalValue":30,
+        "invoiceLineItem":[
+            {
+                "itemNo":"DOI-2017-12-39697",
+                "category":"Baby Food",
+                "classification":"Baby Food",
+                "description":"Baby Food-150g-Halal",
+                "quantity":2,
+                "value":5,
+                "totalValue":10
+            },
+            {
+                "itemNo":"DOI-2017-12-39697",
+                "category":"Baby Food",
+                "classification":"Baby Food",
+                "description":"Baby Food-150g-Halal",
+                "quantity":2,
+                "value":5,
+                "totalValue":10
+            },
+            {
+                "itemNo":"DOI-2017-12-39697",
+                "category":"Baby Food",
+                "classification":"Baby Food",
+                "description":"Baby Food-150g-Halal",
+                "quantity":2,
+                "value":5,
+                "totalValue":10
+            }
+        ],
+        "remarks":"",
+        "total":0
+    }
+}

@@ -1,0 +1,70 @@
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Greetings</h4>
+                    <p>
+                        Hi there! We appreciate your precious time out to help out with us at Helping Hands Singapore! If you have
+                        any enquiries, do feel free to approach any of our staff and we will gladly answer them for you.
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Instructions</h4>
+                    <p class="mb-1">
+                        If you have spoken to our friendly staff at the counter, and you are sure of the job scope is <b>(Stocktaking /
+                        Packing) </b>, do proceed on the tasks allocated to you. You can access the relevant pages required to fulfil your task via the navigation bar on the left or the links below.
+                    </p>
+                    <p class="mb-1">
+                        If you have yet to receive instructions, kindly seek out the staff at the counter. Thank you.
+                    </p>
+                    <button class="btn btn-secondary btn-std" (click)="navigate('scan')"><span class="fas fa-fw fa-external-link"></span> Go to Stocktake</button>
+                    <button class="btn btn-secondary btn-std" (click)="navigate('packinglist')"><span class="fas fa-fw fa-external-link"></span> Go to Packing List</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Contacts</h4>
+                    <u>General Enquiries</u>
+                    <p>Email: enquiries@helpinghands.sg</p>
+                    <p class="mb-1">Tel: +65 6831 5395</p>
+                    <u>Jessie Tan (Management Associate)</u>
+                    <p>Email: jessie@helpinghands.sg</p>
+                    <p>Tel: +65 XXXX XXXX</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">FAQs</h4>
+                    <p>
+                        These FAQs are separated into 2 parts. First part consists of questions pertaining to Stocktaking
+                        and second part consists of questions pertaining to Packing of items for the Beneficiaries.
+                    </p>
+                    <hr>
+                    <h4 class="card-title mt-4 mb-2">Stocktaking</h4>
+                    <ng-container *ngFor="let faq of stockTakeFaqGroupData">
+                        <div class="faq-item">{{ faq.qn }}
+                            <button class="pull-right" style="cursor:pointer" (click)="faq.toggle = !faq.toggle">
+                                <span class="fas fa-fw fa-caret-down"></span>
+                            </button>
+                        </div>
+                        <div class="faq-item faq-ans" *ngIf="faq.toggle">{{ faq.answer }}</div>
+                    </ng-container>
+                    <h4 class="card-title mt-4 mb-2">Packing</h4>
+                    <ng-container *ngFor="let faq of packingFaqGroupData">
+                        <div class="faq-item">{{ faq.qn }}
+                            <button class="pull-right" style="cursor:pointer" (click)="faq.toggle = !faq.toggle">
+                                <span class="fas fa-fw fa-caret-down"></span>
+                            </button>
+                        </div>
+                        <div class="faq-item faq-ans" *ngIf="faq.toggle">{{ faq.answer }}</div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

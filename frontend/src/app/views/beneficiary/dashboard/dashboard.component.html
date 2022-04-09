@@ -1,0 +1,29 @@
+<mat-card class="p-0">
+  <mat-card-title class="m-0">
+    <div class="card-title-text">Browse</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content class="p-0">
+    <mat-grid-list cols="4" class="app-gallery">
+
+      <!-- Gallery item -->
+      <mat-grid-tile *ngFor="let pic of pictures">
+      	<div *ngIf="pic.type === 'category'">
+      		<div class="tint1" (click)="browseButton( pic.name )">
+	      		<span class="picture-text1"> {{ pic.name }} </span>
+	      	</div>
+	        <img [src]="pic.image" alt="">
+      	</div>
+      	<div *ngIf="pic.type === 'product'">
+      		<div class="tint1 tint2" (click)="browseButton( pic.desc )">
+	      		<span class="picture-text2"> {{ pic.desc }} </span>
+	      	</div>
+	        <img [src]="pic.image" alt="">
+
+      	</div>
+	      	
+
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>

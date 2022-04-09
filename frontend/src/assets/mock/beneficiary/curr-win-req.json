@@ -1,0 +1,19 @@
+{
+    "status":"SUCCESS",
+    "result":[
+        {
+            "id":18,
+            "foodItem":{
+                "id":547,
+                "category":"Snacks",
+                "classification":"Biscuit/Crackers",
+                "description":"Biscuit/Crackers-150g-Halal",
+                "quantity":6,
+                "value":2.0
+            },
+            "requestCreationDate":"2018-03-16",
+            "requestedQuantity":5
+        }
+    ],
+    "message":"GET call for REQUEST is successful"
+}

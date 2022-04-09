@@ -1,0 +1,39 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "src",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "module": "esnext",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2017",
+            "dom"
+        ],
+        "paths": {
+		    "core-js/es7/reflect": ["node_modules/core-js/proposals/reflect-metadata"],
+	      	"core-js/es6/*": ["node_modules/core-js/es"],
+            "@app/*": [ "app/*" ],
+            "@assets/*": [ "assets/*" ],
+            "@config/*": [ "config/*" ],
+            "@environments/*" : [ "environments/*" ],
+            "@utils/*": [ "app/utils/*" ],
+            "@admin/*": [ "app/views/admin/*" ],
+            "@volunteer/*": [ "app/views/volunteer/*" ],
+            "@beneficiary/*": [ "app/views/beneficiary/*" ],
+            "@services/*": [ "app/services/*" ],
+            "@pipes/*": [ "app/pipes/*" ],
+            "@directives/*" : [ "app/directives/*" ],
+            "@guards/*": [ "app/guards/*" ],
+            "@components/*": [ "app/components/*" ],
+            "@views/*": [ "app/views/*" ]
+        }
+    }
+}

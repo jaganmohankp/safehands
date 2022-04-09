@@ -1,0 +1,126 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block pb-0">
+                            <h4 class="card-title mb-0">Requests Breakdown (Click on bars to expand, surrounding to collapse)</h4>
+                        </div>
+                        <div #reqChartCard>
+                            <req-chart #reqChart [chartWidth]="reqChartWidth"></req-chart>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-block pb-0">
+                            <h4 class="card-title mb-0">Inventory Breakdown (Click on bars to expand, surrounding to collapse)</h4>
+                        </div>
+                        <div #invChartCard>
+                            <inv-chart #invChart [chartWidth]="invChartWidth"></inv-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-4">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Request Window</h4>
+                        <table class="w-100 mb-3" style="table-layout:fixed">
+                            <tr>
+                                <td><p class="card-content-header">Status</p></td>
+                                <td>
+                                    <p *ngIf="windowStatus" class="card-content win-active">Active</p>
+                                    <p *ngIf="!windowStatus" class="card-content win-inactive">Inactive</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p class="card-content-header"># of Beneficiaries Requests</p></td>
+                                <td><p class="card-content">{{ noOfReq }}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class="card-content-header">Opening Date</p></td>
+                                <td>
+                                    <p *ngIf="windowStatus" class="card-content">{{ openDate }}</p>
+                                    <p *ngIf="!windowStatus" class="card-content">-</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p class="card-content-header">Closing Date</p></td>
+                                <td>
+                                    <p *ngIf="windowStatus" class="card-content">{{ closeDate }}</p>
+                                    <p *ngIf="!windowStatus" class="card-content">-</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p class="card-content-header"># of Days</p></td>
+                                <td>
+                                    <p *ngIf="windowStatus" class="card-content">{{ days }}</p>
+                                    <p *ngIf="!windowStatus" class="card-content">-</p>
+                                </td>
+                            </tr>
+                        </table>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <button *ngIf="windowStatus" type="button" class="btn btn-secondary btn-std" (click)="toggleWindow('edit')">
+                                <span class="fa fa-fw fa-pencil"></span>
+                                <span>Edit</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-std" (click)="toggleWindow('toggle')">
+                                <span class="fas fa-fw" [ngClass]="{'fa-check-circle':!windowStatus,'fa-times-circle':windowStatus}"></span>
+                                <span *ngIf="!windowStatus">Open Window</span>
+                                <span *ngIf="windowStatus">Close Window</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Beneficiary Point Rate</h4>
+                        <table class="ben-pt-rt">
+                            <tr>
+                                <td><p>Multiplier Rate</p></td>
+                                <td>
+                                    <p *ngIf="ratesEdit === 'Edit'" class="text-center">{{ multiplierRate }}</p>
+                                    <p><input #multRef OnlyNumber="true" *ngIf="ratesEdit === 'Update'" [value]="multiplierRate" class="tb-width text-center"/></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><p>Decay Rate</p></td>
+                                <td>
+                                    <p *ngIf="ratesEdit === 'Edit'" class="text-center">{{ decayRate }}</p>
+                                    <p><input #decayRef OnlyNumber="true" *ngIf="ratesEdit === 'Update'" [value]="decayRate" class="tb-width text-center"/></p>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <button type="button" class="btn btn-secondary btn-std" (click)="onEditRates()">
+                                <span class="fas fa-fw fa-pencil"></span>
+                                <span>{{ ratesEdit }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Volunteer Password of the Day</h4>
+                    <table class="w-100 fixed-layout">
+                        <tr>
+                            <td>
+                                <p class="card-content-header">Password</p>
+                            </td>
+                            <td>
+                                <p class="card-content">{{ dailyPassword }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

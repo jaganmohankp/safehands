@@ -1,0 +1,122 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 dropdown">
+                    <div class="row">
+                        <div class="col-lg-3 pr-0">
+                            <label class="w-100">Category</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-wrapper">
+                                <select (change)="onSelectCategory($event)">
+                                    <option *ngFor="let cat of categories">
+                                        {{ cat }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 dropdown">
+                    <div class="row">
+                        <div class="col-lg-3 pr-0">
+                            <label class="w-100" *ngIf="classifications?.length !== 0">
+                                Classification
+                            </label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-wrapper" *ngIf="classifications?.length !== 0">
+                                <select
+                                    (change)="onSelectClassification($event)"
+                                    [disabled]="classifications?.length === 0"
+                                >
+                                    <option *ngFor="let cls of classifications">
+                                        {{ cls }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 order-lg-1">
+                    <button class="btn btn-secondary btn-std add-new" (click)="onAdd()">
+                        <span class="fas fa-fw fa-plus"></span>
+                        <span>Add</span>
+                    </button>
+                </div>
+                <div class="col-lg-2 order-lg-2">
+                    <button class="btn btn-secondary btn-std add-new" (click)="onReset()" [disabled]="window || !packing_status">
+                        <span class="fas fa-fw fa-undo"></span>
+                        <span>Reset</span>
+                    </button>
+                </div>
+                <div class="col-lg-2 order-lg-3">
+                    <input type="text" class="searchbar pull-right" placeholder="Search" [(ngModel)]="criteria" (keyup)="onFilter(true)"/>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th *ngIf="selectedCategory === 'All'">Category</th>
+                            <th *ngIf="selectedClassification === 'All'">Classification</th>
+                            <th>Description</th>
+                            <th class="text-center">Measurement</th>
+                            <th class="text-center">Value</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of pager.data">
+                            <td>{{ item.sn }}</td>
+                            <td *ngIf="selectedCategory === 'All'">{{ item.category }}</td>
+                            <td *ngIf="selectedClassification === 'All'">{{ item.classification }}</td>
+                            <td>{{ item.description | split:'-':'0' }}<span *ngIf="item.description.includes('Halal')"> ({{ item.description | split:'-':'2' }})</span></td>
+                            <td class="text-center">{{ item.description | split:'-':'1' }}</td>
+                            <ng-container *ngIf="!item.edit; else editBox">
+                                <td class="text-center">
+                                    <span>$ {{ item.value | number: '1.2-2' }}</span>
+                                    <span *ngIf="item.value === 0" class="fas fa-fw fa-exclamation-circle win-inactive" matTooltip="Please set a value to this item!" matTooltipPosition="after"></span>
+                                </td>
+                                <td class="text-center input-value">
+                                    {{ item.quantity }}
+                                </td>
+                            </ng-container>
+                            <ng-template #editBox>
+                                <td class="text-center">
+                                    <input OnlyNumber="true" type="number" min="0" [(ngModel)]="item.value" class="tb-width text-center">
+                                </td>
+                                <td class="text-center">
+                                    <input OnlyNumber="true" type="number" min="0" [(ngModel)]="item.quantity" class="tb-width text-center">
+                                </td>
+                            </ng-template>
+                            <td class=" text-center">
+                                <button class="btn btn-secondary btn-std inv-action" (click)="onEdit(item)" [disabled]="item.quantity === ''">
+                                    <span class="fas fa-fw fa-pencil"></span><span class="shorten"> {{ item.edit ? 'Update' : 'Edit' }}</span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="pager.data.length === 0">
+                            <td class="text-center" colspan="8">
+                                <strong>None</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <pagination
+                [count]="data?.length"
+                [page]="pager.page"
+                [pagesToShow]="pager.pagesToShow"
+                [perPage]="pager.pageSize"
+                (pageSizeChange)="pgSvc.loadPage(data, pager, $event)"
+                (goPrev)="pgSvc.prev(data, pager)"
+                (goNext)="pgSvc.next(data, pager)"
+                (goPage)="pgSvc.go(data, pager, $event)">
+            </pagination>
+        </div>
+    </div>
+</div>

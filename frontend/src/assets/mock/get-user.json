@@ -1,0 +1,12 @@
+{
+    "status":"SUCCESS",
+    "message":null,
+    "result":{
+        "id": "admin",
+        "username": "admin",
+        "password": "12345",
+        "usertype": "beneficiary",
+        "name": "Jessie",
+        "email": "helpinghands@email.com"
+    }
+}

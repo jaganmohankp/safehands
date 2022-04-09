@@ -1,0 +1,86 @@
+<div class="col-lg-12">
+    <div class="card text-center-web">
+        <div class="card-block mw-400">
+            <div class="file-input">
+                <input #file type="file" id="scanner-file" accept="image/*" capture="camera" (change)="onCapture($event)"/>
+                <label class="btn btn-std" for="scanner-file">Open Camera</label>
+            </div>
+            <div class="barcode-input text-left">
+                <label>Barcode*</label><i *ngIf="barcode" class="fs-075 align-right">Please verify the barcode</i><br />
+                <input [value]="barcode" placeholder="Open the camera to scan the barcode" readonly/>
+            </div>
+            <form [formGroup]="invForm" (ngSubmit)="onSubmit()">
+                <div class="entry-form-content text-left">
+                    <label>Donor*</label>
+                    <div class="input-wrapper dropdown">
+                        <select formControlName="donor">
+                            <option *ngFor="let donor of donors">{{ donor }}</option>
+                        </select>
+                        <input *ngIf="invForm.value.donor === 'Others'" placeholder="Donor name" [(ngModel)]="donorName" [ngModelOptions]="{ standalone: true }">
+                        <span *ngIf="invalidDonor()" class="error-msg">Please select or create a new donor!</span>
+                    </div>
+                    <label>Category*</label>
+                    <div class="input-wrapper dropdown">
+                        <select formControlName="category" (change)="onFilter('category')" [value]="invForm.get('category').value">
+                            <option *ngFor="let cat of categories">{{ cat }}</option>
+                        </select>
+                        <span *ngIf="invForm.value.category === '' && invForm.get('category').touched" class="error-msg">Please select a new category!</span>
+                    </div>
+                    <label>Classification*</label>
+                    <div class="input-wrapper dropdown">
+                        <select formControlName="classification" (change)="onFilter('classification')" [value]="invForm.get('classification').value">
+                            <option *ngFor="let cls of classifications">{{ cls }}</option>
+                        </select>
+                        <span *ngIf="invForm.value.classification === '' && invForm.get('classification').touched" class="error-msg">Please select a new classification!</span>
+                    </div>
+                    <label>Description*</label>
+                    <div class="input-wrapper dropdown">
+                        <select formControlName="description" [value]="invForm.get('description').value">
+                            <option *ngFor="let desc of descriptions">{{ desc }}</option>
+                        </select>
+                        <span *ngIf="invForm.value.description === '' && invForm.get('description').touched" class="error-msg">Please select a new description!</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Unit*</label>
+                            <div class="input-wrapper dropdown">
+                                <select formControlName="unit" [value]="invForm.get('unit').value" (change)="onFilter('unit')">
+                                    <option *ngFor="let unit of units">{{ unit }}</option>
+                                </select>
+                                <span *ngIf="invForm.value.unit === '' && invForm.get('unit').touched" class="error-msg">Please select a unit!</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Measurement*</label>
+                            <div class="input-wrapper dropdown">
+                                <select formControlName="measurement" [value]="invForm.get('measurement').value">
+                                    <option *ngFor="let msr of measurements">{{ msr }}</option>
+                                </select>
+                                <span *ngIf="invForm.value.measurement === '' && invForm.get('measurement').touched" class="error-msg">Please select a measurement!</span>
+                            </div>
+                        </div>
+                    </div>
+                    <label>Quantity*</label>
+                    <div class="dropdown">
+                        <input OnlyNumber="true" type="tel" formControlName="quantity"/>
+                        <span *ngIf="!invForm.get('quantity').valid && invForm.get('quantity').touched" class="error-msg">Please enter a quantity!</span>
+                    </div>
+                    <div class="mb-20">
+                        <label class="pr-20">
+                            <input type="checkbox" [checked]="non_halal" (click)="onCheck($event, 'non-halal')"/>
+                            <span class="label-text"> Non-Halal</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" formControlName="halal" [checked]="halal" (click)="onCheck($event, 'halal')"/>
+                            <span class="label-text"> Halal</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row form-button-row">
+                    <button type="button" class="btn btn-std float-left" (click)="resetForm()">Clear</button>
+                    <button type="submit" class="btn btn-success float-right" [disabled]="!validateForm()">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

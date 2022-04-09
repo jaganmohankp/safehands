@@ -1,0 +1,147 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Current Window Request</h4>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <p class="allocation-status">
+                                Window Status:
+                                <span *ngIf="window" style="background-color: #ffa824">Open</span>
+                                <span *ngIf="!window && !approvalStatus" style="background-color: #ffa824">Processing</span>
+                                <span *ngIf="!window && approvalStatus" style="background-color: #5ab86f">Allocated</span>
+                            </p>
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="searchbar" placeholder="Search" (keyup)="onFilter('request', true)" [(ngModel)]="reqCriteria"/>
+                        </div>
+                    </div>
+
+                    <div style="overflow-x:auto">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr *ngIf="window">
+                                    <th>#</th>
+                                    <th>Description</th>
+                                    <th class="text-center abv-text" data-before="(Requested&nbsp;Quantity / Inventory&nbsp;Quantity)" data-after="(Req&nbsp;Qty&nbsp;/ Inv&nbsp;Qty)"></th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                                <tr *ngIf="!window">
+                                    <th>#</th>
+                                    <th>Description</th>
+                                    <th>Requested Quantity</th>
+                                    <th>Allocated Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of reqPager.data; let i = index">
+                                    <td>{{ item.sn }}</td>
+                                    <td>{{ item.description | split:'-':'0' }}<span *ngIf="item.description.includes('Halal')"> ({{ item.description | split:'-':'2' }})</span> - {{ item.description | split:'-':'1' }} <span class="fas fa-info-circle" matTooltip="Category [ {{ item.category }} ] , Classification [ {{ item.classification }} ]" matTooltipPosition="after"></span></td>
+                                    <ng-container *ngIf="window">
+                                        <td *ngIf="!item.edit" class="text-center">{{ item.requestedQuantity }} / {{ item.inventoryQuantity }}</td>
+                                        <td *ngIf="item.edit" class="text-center">
+                                            <input OnlyNumber="true" type="number" [(ngModel)]="item.requestedQuantity" class="tb-width text-center"/>
+                                            <span> / {{ item.inventoryQuantity }}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <button class="btn btn-secondary btn-std inv-action" (click)="onEdit(item)" [disabled]="item.requestedQuantity === '' || item.requestedQuantity > item.inventoryQuantity"><span class="fas fa-pencil"></span> <span class="shorten">{{ item.edit ? 'Update' : 'Edit' }}</span> </button>
+                                            <button class="btn btn-danger btn-std inv-action" (click)="onDelete(item)" [disabled]="item.edit"><span class="fas fa-times-circle"></span> <span class="shorten"> Delete</span></button>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="!window">
+                                        <td>{{ item.requestedQuantity }}</td>
+                                        <td>{{ item.allocatedQuantity }}</td>
+                                    </ng-container>
+                                </tr>
+                                <tr *ngIf="reqPager?.data?.length === 0">
+                                    <td colspan="5" class="text-center">
+                                        <strong *ngIf="!window && !approvalStatus; else elseNoData">Currently Allocating</strong>
+                                        <ng-template #elseNoData>
+                                            <strong>None</strong>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination
+                        [count]="reqData?.length"
+                        [page]="reqPager.page"
+                        [pagesToShow]="reqPager.pagesToShow"
+                        [perPage]="reqPager.pageSize"
+                        (pageSizeChange)="pgSvc.loadPage(reqData, reqPager, $event)"
+                        (goPrev)="pgSvc.prev(reqData, reqPager)"
+                        (goNext)="pgSvc.next(reqData, reqPager)"
+                        (goPage)="pgSvc.go(reqData, reqPager, $event)"
+                    >
+                    </pagination>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Request History</h4>
+                    <div class="row">
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-6">
+                            <input type="text" class="searchbar" placeholder="Search" (keyup)="onFilter('history', true)" [(ngModel)]="histCriteria"/>
+                        </div>
+                    </div>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr><th colspan="5">Date</th></tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let row of histPager.data">
+                                <tr style="border-top: 1px solid #e9ecef">
+                                    <td colspan="2">{{ row.date }}</td>
+                                    <td colspan="2">
+                                        <button class="btn btn-std align-right" style="white-space: pre-line;" (click)="onRequestSimilar(row.index)" [disabled]="!window">Request Similar Items</button>
+                                    </td>
+                                    <td colspan="3" class="pull-right" style="border-top: 0px;">
+                                        <button class="btn-caret" (click)="row.edit = !row.edit">
+                                            <span class="fas fa-caret-down"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="row.edit">
+                                    <tr><td colspan="5" class="trench"></td></tr>
+                                    <tr class="nested-table-header">
+                                        <th class="trench"></th>
+                                        <th>#</th>
+                                        <th>Description</th>
+                                        <th class="text-center abv-text" data-before="Allocated&nbsp;Quantity / Requested&nbsp;Quantity" data-after="Alloc&nbsp;Qty&nbsp;/ Req&nbsp;Qty"></th>
+                                        <th class="trench"></th>
+                                    </tr>
+                                    <tr *ngFor="let item of row.items; let i = index">
+                                        <td class="trench"></td>
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ item.description | split:'-':'0' }}<span *ngIf="item.description.includes('Halal')"> ({{ item.description | split:'-':'2' }})</span> - {{ item.description | split:'-':'1' }} <span class="fas fa-info-circle" matTooltip="Category [ {{ item.category }} ] , Classification [ {{ item.classification }} ]" matTooltipPosition="after"></span></td>
+                                        <td class="text-center">{{ item.allocatedQuantity }} / {{ item.requestedQuantity }}</td>
+                                        <td class="trench"></td>
+                                    </tr>
+                                    <tr><td *ngFor="let i of [1,2,3,4,5]" class="trench"></td></tr>
+                                </ng-container>
+                            </ng-container>
+                            <tr *ngIf="histPager?.data?.length === 0"><td colspan="5" class="text-center"><strong>None</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <pagination
+                        [count]="histData?.length"
+                        [page]="histPager.page"
+                        [pagesToShow]="histPager.pagesToShow"
+                        [perPage]="histPager.pageSize"
+                        (pageSizeChange)="pgSvc.loadPage(histData, histPager, $event)"
+                        (goPrev)="pgSvc.prev(histData, histPager)"
+                        (goNext)="pgSvc.next(histData, histPager)"
+                        (goPage)="pgSvc.go(histData, histPager, $event)"
+                    >
+                    </pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

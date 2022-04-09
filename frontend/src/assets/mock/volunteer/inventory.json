@@ -1,0 +1,26 @@
+{
+    "donors" : [
+        { "name": "Royal Park Hotel" },
+        { "name": "ABC Bakery" },
+        { "name": "Tim Ho Wan" }
+    ],
+
+    "categories" : [
+        { "type": "Staples (Rice)" },
+        { "type": "Meat" },
+        { "type": "Pasta" }
+    ],
+
+    "weights" : [
+        { "value": "50g" },
+        { "value": "100g" },
+        { "value": "150g" },
+        { "value": "200g" },
+        { "value": "250g" },
+        { "value": "300g" },
+        { "value": "350g" },
+        { "value": "400g" },
+        { "value": "450g" },
+        { "value": "500g" }
+    ]
+}

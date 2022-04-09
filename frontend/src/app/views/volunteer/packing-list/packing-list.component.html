@@ -1,0 +1,37 @@
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-block">
+            <div class="display-grid">
+                <div class="packing-list">
+                    <button class="btn btn-secondary" [ngStyle]="{ 'opacity': checkEnabled(1) }" (click)="goToPage(1)">1<span class="shorten">. Select List</span></button>
+                    <span class="fal fa-fw fa-angle-right"></span>
+                    
+                    <button class="btn btn-secondary" [ngStyle]="{ 'opacity': checkEnabled(2) }" (click)="goToPage(2)" [disabled]="selectedBeneficiary === null">2<span class="shorten">. Pack Item</span></button>
+                    <span class="fal fa-fw fa-angle-right"></span>
+                    
+                    <button class="btn btn-secondary" [ngStyle]="{ 'opacity': checkEnabled(3) }" (click)="goToPage(3)" [disabled]="selectedBeneficiary === null || !validatePackingList()">3<span class="shorten">. Confirm</span></button>
+                </div>
+            </div>
+            <div [ngSwitch]="page">
+                <vol-select
+                    *ngSwitchCase="1"
+                    [data]="data"
+                    (next)="onNext()"
+                    (selected)="onSelected($event)"
+                ></vol-select>
+                <vol-pack
+                    *ngSwitchCase="2"
+                    [data]="selectedBeneficiary"
+                    (next)="onNext()"
+                    (prev)="onPrev()"
+                ></vol-pack>
+                <vol-confirm
+                    *ngSwitchCase="3"
+                    [data]="selectedBeneficiary"
+                    (prev)="onPrev()"
+                    (confirm)="onConfirm()"
+                ></vol-confirm>
+            </div>
+        </div>
+    </div>
+</div>

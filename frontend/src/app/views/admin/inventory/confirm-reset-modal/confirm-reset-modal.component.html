@@ -1,0 +1,13 @@
+<div style="overflow-y:auto; max-height: 90vh" tabindex="-1">
+    <h4 class="modal-title">Reset Inventory Confirmation</h4>
+    <div class="modal-content">
+        <div class="modal-input">
+            <label>Enter your password to confirm* </label>
+            <input type="password" [(ngModel)]="password"/>
+        </div>
+    </div>
+    <div class="modal-action">
+        <button class="btn btn-secondary btn-std" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-success" (click)="onConfirm()" [disabled]="password.length === 0">Confirm</button>
+    </div>
+</div>

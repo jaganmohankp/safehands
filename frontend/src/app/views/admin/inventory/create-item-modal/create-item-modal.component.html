@@ -1,0 +1,77 @@
+<div style="overflow-y:auto; max-height: 90vh">
+    <h4 class="modal-title">Add new item</h4>
+    <div class="modal-content">
+        <div class="modal-input">
+            <label>Category* <a *ngIf="catTog2" (click)="toggleInputs('category')">{{ catTog1 ? 'cancel' : 'new' }}</a></label>
+            <div class="input-wrapper" *ngIf="!catTog1">
+                <select (change)="onSelectCategory($event)">
+                    <option *ngFor="let cat of categories">{{ cat }}</option>
+                </select>
+
+            </div>
+            <input *ngIf="catTog1" [(ngModel)]="category"/>
+        </div>
+        <div class="modal-input">
+            <label>Classification* <a *ngIf="clsTog2" (click)="toggleInputs('classification')">{{ clsTog1 ? 'cancel' : 'new' }}</a></label>
+            <div class="input-wrapper" *ngIf="!clsTog1">
+                <select (change)="onSelectClassification($event)" [disabled]="classifications?.length === 0">
+                    <option *ngFor="let cls of classifications">{{ cls }}</option>
+                </select>
+            </div>
+            <input *ngIf="clsTog1" [(ngModel)]="classification"/>
+        </div>
+        <div class="modal-input">
+            <label>Description* <a *ngIf="descTog2" (click)="toggleInputs('description')">{{ descTog1 ? 'cancel' : 'new' }}</a></label>
+            <div class="input-wrapper" *ngIf="!descTog1" >
+                <select [(ngModel)]="description" [disabled]="descriptions?.length === 0">
+                    <option *ngFor="let desc of descriptions">{{ desc }}</option>
+                </select>
+            </div>
+            <input *ngIf="descTog1" [(ngModel)]="description"/>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 modal-input">
+                <label>Unit*</label>
+                <div class="input-wrapper">
+                    <select [(ngModel)]="unit" (change)="onSelectUnit()">
+                        <option *ngFor="let unt of units">{{ unt }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6 modal-input">
+                <label>Measurement*</label>
+                <div class="input-wrapper">
+                    <select [(ngModel)]="measurement">
+                        <option *ngFor="let msrmt of measurements">{{ msrmt }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 modal-input">
+                <label>Quantity*</label>
+                <input
+                    OnlyNumber="true"
+                    type="number" min="0"
+                    [(ngModel)]="quantity"
+                />
+            </div>
+            <div class="col-lg-6 modal-input">
+                <label>Value*</label>
+                <input
+                    OnlyNumber="true"
+                    type="number" min="0"
+                    [(ngModel)]="value"
+                />
+            </div>
+        </div>
+        <label class="modal-checkbox">
+            <input type="checkbox" [(ngModel)]="halal"/>
+            <span class="label-text"> Halal </span>
+        </label>
+    </div>
+    <div class="modal-action">
+        <button class="btn btn-secondary btn-std" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-success" (click)="onConfirm()" [disabled]="!getValid()">Add</button>
+    </div>
+</div>

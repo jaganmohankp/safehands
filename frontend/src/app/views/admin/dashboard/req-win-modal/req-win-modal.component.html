@@ -1,0 +1,17 @@
+<h4 class="modal-title">{{ title }}</h4>
+<div class="modal-content">
+    <label> Closing Date* </label>
+    <div class="input-wrapper">
+        <!-- <input [min]="start" [matDatepicker]="picker" [(ngModel)]="end" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+        <input matInput [min]="start" [matDatepicker]="picker" [(ngModel)]="end" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #picker></mat-datepicker>
+    </div>
+
+    <!-- <mat-datepicker #picker></mat-datepicker> -->
+</div>
+<div class="modal-action">
+    <button class="btn btn-secondary btn-std" (click)="onCancel()">Cancel</button>
+    <button class="btn btn-success" (click)="onConfirm()" [disabled]="end === null">Confirm</button>
+</div>

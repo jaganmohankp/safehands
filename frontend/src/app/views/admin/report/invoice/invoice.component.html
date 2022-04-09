@@ -1,0 +1,219 @@
+<div class="col-lg-12">
+    <div class="card-block invoice-table">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card-block">
+                    <h4 class="card-title">INVOICE (Donation)</h4>
+                    <div class="modal-input">
+                        <table class="inv-header-table no-border">
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input type="checkbox" [checked]="invoiceData && delivery" [disabled]="!invoiceData" (change)="onCheck($event, 'delivery')"/>
+                                        <span class="label-text">   Deliver</span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input type="checkbox" [checked]="invoiceData && !delivery" [disabled]="!invoiceData" (change)="onCheck($event, 'self_collect')"/>
+                                        <span class="label-text">   Self-Collect</span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-secondary btn-std" (click)="onGenerateInvoice()" [disabled]="invalidGenerateFields()">
+                                        <span class="fas fa-fw fa-cogs"></span>
+                                        <span class="shorten"> Generate Invoice</span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-secondary btn-std" (click)="onDownload()" [disabled]="!report_generated">
+                                        <span class="fas fa-fw fa-download"></span>
+                                        <span class="shorten"> Download</span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Month</td>
+                            <td>
+                                <select class="inv-num-list" [(ngModel)]="month" (change)="onSelect('month')">
+                                    <option *ngFor="let month of monthList">
+                                        {{ month }}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Invoice No.</td>
+                            <td>
+                                <select class="inv-num-list" [(ngModel)]="invoiceNumber" (change)="onSelect('invoice')" [disabled]="!invNumList || invNumList?.length === 0">
+                                    <option *ngFor="let num of invNumList">
+                                        {{ num }}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Invoice Date</td>
+                            <td>{{ invoiceData?.packedDate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Purchase</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Delivery Date</th>
+                            <th>Delivery Time</th>
+                            <th>Issued By</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="invoiceData">
+                            <td>
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="delivery_date" [matDatepicker]="picker" readonly [disabled]="self_collect">
+                                    <button mat-button *ngIf="delivery_date" matSuffix mat-icon-button aria-label="Clear" (click)="delivery_date = null">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="delivery_time" type="time" [disabled]="self_collect">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="issued_by">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="comments">
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!invoiceData">
+                            <td colspan="4" class="text-center">None</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Bill To:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Organisation:</td>
+                            <td>{{ invoiceData?.organizationToBill }}</td>
+                        </tr>
+                        <tr>
+                            <td>Address:</td>
+                            <td>{{ invoiceData?.organizationToBillAddress }}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Person:</td>
+                            <td>{{ invoiceData?.organizationToBillContactPerson }}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number:</td>
+                            <td>{{ invoiceData?.organizationToBillContactNumber }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Deliver To:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Organisation:</td>
+                            <td>{{ invoiceData?.receivingOrganization }}</td>
+                        </tr>
+                        <tr>
+                            <td>Address:</td>
+                            <td>{{ invoiceData?.receivingOrganizationAddress }}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Person:</td>
+                            <td>{{ invoiceData?.receivingOrganizationContactPerson }}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Number:</td>
+                            <td>{{ invoiceData?.receivingOrganizationContactNumber }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">No.</th>
+                            <th>Item No.</th>
+                            <th>Category</th>
+                            <th>Classification</th>
+                            <th>Description</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-center">Value</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of invoiceData?.invoiceLineItem; let i = index">
+                            <td class="text-center">{{ i + 1 }}</td>
+                            <td>{{ item?.itemNo }}</td>
+                            <td>{{ item?.category }}</td>
+                            <td>{{ item?.classification }}</td>
+                            <td>{{ item.description | split:'-':'0' }} ({{ item.description | split:'-':'1' }})<span *ngIf="item.description.includes('Halal')">, {{ item.description | split:'-':'2' }}</span></td>
+                            <td class="text-center">{{ item?.quantity }}</td>
+                            <td>$<span class="align-right">{{ item?.value | number: '1.2-2' }}</span></td>
+                            <td>$<span class="align-right">{{ item?.totalValue | number: '1.2-2' }}</span></td>
+                        </tr>
+                        <tr *ngIf="!invoiceData || invoiceData?.invoiceLineItem?.length === 0">
+                            <td colspan="8" class="text-center">None</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr *ngIf="invoiceData?.invoiceLineItem?.length > 0">
+                            <td colspan="6">Remarks:</td>
+                            <td>TOTAL </td>
+                            <td>$<span class="align-right">{{ invoiceData?.combinedTotalValue | number: '1.2-2' }}</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

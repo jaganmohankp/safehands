@@ -1,0 +1,71 @@
+{
+    "status":"SUCCESS",
+    "result":[
+        {
+            "id":1,
+            "beneficiary":{
+                "usertype":"beneficiary",
+                "username":"bene1",
+                "name":"bene1",
+                "email":"louis.lim.2015@business.smu.edu.sg",
+                "numBeneficiary":100,
+                "address":"bene, 1asdf",
+                "score":100.0,
+                "contactPerson":"ef",
+                "contactNumber":"fd",
+                "memberType":"Elderly Care",
+                "hasTransport":true
+            },
+            "packedItems":[
+                {
+                    "category":"Snacks",
+                    "classification":"Biscuit/Crackers",
+                    "description":"Biscuit/Crackers-50g-Halal",
+                    "inventoryQuantity":11,
+                    "allocatedQuantity":3,
+                    "packedQuantity":0,
+                    "itemPackingStatus":false
+                }
+            ],
+            "packingStatus":false
+        },
+        {
+            "id":2,
+            "beneficiary":{
+                "usertype":"beneficiary",
+                "username":"bene2",
+                "name":"bene2",
+                "email":"louis.lim.ying.wei@gmail.com",
+                "numBeneficiary":100,
+                "address":"qsdfa, dsfa",
+                "score":100.0,
+                "contactPerson":"sdfadsf",
+                "contactNumber":"adsf",
+                "memberType":"Elderly Care",
+                "hasTransport":true
+            },
+            "packedItems":[
+                {
+                    "category":"Snacks",
+                    "classification":"Biscuit/Crackers",
+                    "description":"Biscuit/Crackers-50g-Halal",
+                    "inventoryQuantity":11,
+                    "allocatedQuantity":8,
+                    "packedQuantity":0,
+                    "itemPackingStatus":false
+                },
+                {
+                    "category":"Snacks",
+                    "classification":"Biscuit/Crackers",
+                    "description":"Biscuit/Crackers-450g",
+                    "inventoryQuantity":1,
+                    "allocatedQuantity":1,
+                    "packedQuantity":0,
+                    "itemPackingStatus":false
+                }
+            ],
+            "packingStatus":false
+        }
+    ],
+    "message":"Packing list successfully retrieved."
+}

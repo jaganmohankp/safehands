@@ -1,0 +1,16 @@
+<br />
+<p>{{ instruction }}</p>
+<br />
+<div class="beneficiary-packing-list">
+    <ng-container *ngFor="let ben of data; let i = index">
+        <button *ngIf="!ben.status" [ngClass]="{ 'select-list': i === selectedIndex }" (click)="onSelect(ben, i)">
+            <span class="pull-left">{{ ben.name }}</span>
+            <span class="pull-right" disabled>{{ ben.packedItems.length }}</span>
+        </button>
+    </ng-container>
+    <h5 *ngIf="showNone()" class="text-center">None</h5>
+</div>
+
+<div class="btn-beneficiary-packing-list">
+    <button class="btn btn-success mt-3 pull-right" (click)="onNext()" [disabled]="!haveSelected">Next <span class="fas fa-fw fa-angle-right"></span></button>
+</div>

@@ -1,0 +1,23 @@
+<mat-progress-bar *ngIf="loading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
+<mat-toolbar class="topbar" role="header" >
+    <button (click)="toggleSidenav()">
+        <span class="fal fa-bars"></span>
+    </button>
+    <div class="pointer" (click)="navigateHome()">
+        <img src="assets/images/icon.png" class="header-icon"/>
+        <span class="font-weight-bold header-title">Helping Hands</span>
+        <span class="font-weight-bold alt-text">HelpingHands</span>
+    </div>
+    <ul class="nav-icons">
+        <li *ngIf="usertype === 'admin'">
+            <button mat-button (click)="navigateToInventory()">
+                <span class="fal fa-bell" [matTooltip]="inventoryWarning" matTooltipPosition="before"></span>
+                <span *ngIf="inventoryWarning !== ''" class="notification-number"></span>
+            </button>
+        </li>
+        <li>
+            <button mat-button class="logout" (click)="logout()">Log Out <span class="fal fa-sign-out"></span>
+            </button>
+        </li>
+    </ul>
+</mat-toolbar>

@@ -1,0 +1,30 @@
+<topbar [sidenav]="sidenav" (sidenavToggle)="onToggle()"></topbar>
+<mat-sidenav-container class="main-window">
+    <mat-sidenav
+        #sidenav
+        mode="over"
+        opened="false"
+        class="navigation-bar"
+    >
+        <div class="avatar">
+            <img src="assets/images/profile.jpg" style="vertical-align:center"/>
+            <div>
+                <span>{{ name }}</span>
+                <p>{{ role | camel }}</p>
+                <button *ngIf="usertype !== 'volunteer'" class="user-settings-btn" (click)="openSettings()">
+                    <span class="faw fal fa-cog"></span>
+                    <span>Change Password</span>
+                </button>
+            </div>
+        </div>
+        <navigation (routeChange)="navigateRoute($event)" [sidenav]="sidenav"></navigation>
+    </mat-sidenav>
+    <mat-sidenav-content role="main">
+        <div class="breadcrumbs">
+            {{ title }}
+        </div>
+        <div class="main-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

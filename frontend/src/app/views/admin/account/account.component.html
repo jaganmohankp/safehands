@@ -1,0 +1,70 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-lg-4 dropdown">
+                    <div class="row">
+                        <div class="col-lg-3 pr-0">
+                            <label class="w-100">Account Type</label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-wrapper">
+                                <select [(ngModel)]="accountType" (change)="onFilter(true)">
+                                    <option *ngFor="let accType of userTypes" [value]="accType">
+                                        {{ accType | camel }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-3">
+                    <button class="btn btn-secondary btn-std add-new" (click)="onCreate()"><span class="fa fa-plus"></span> Add New User</button>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" class="searchbar pull-right" placeholder="Search" [(ngModel)]="criteria" (keyup)="onFilter(true)">
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let header of headers">{{ header }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of pager.data; let i = index">
+                            <td>{{ user.sn }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.usertype | camel }}</td>
+                            <td>
+                                <button class="btn btn-secondary btn-std" (click)="onView(user)" matTooltip="View User"
+                                matTooltipPosition="above"><span class="fas fa-fw fa-eye"></span></button>
+                                <button *ngIf="user.usertype !== 'volunteer'" class="btn btn-secondary btn-std" (click)="onReset(user)" matTooltip="Reset Password"
+                                matTooltipPosition="above"><span class="fas fa-fw fa-unlock"></span></button>
+                                <button *ngIf="user.usertype !== 'volunteer'" class="btn btn-std btn-danger" (click)="onDelete(user)" matTooltip="Delete User"
+                                matTooltipPosition="above"><span class="fas fa-fw fa-times-circle"></span></button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="pager.data.length === 0">
+                            <td colspan="6">None</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <pagination
+                [count]="data?.length"
+                [page]="pager.page"
+                [pagesToShow]="pager.pagesToShow"
+                [perPage]="pager.pageSize"
+                (pageSizeChange)="pgSvc.loadPage(data, pager, $event)"
+                (goPrev)="pgSvc.prev(data, pager)"
+                (goNext)="pgSvc.next(data, pager)"
+                (goPage)="pgSvc.go(data, pager, $event)">
+            </pagination>
+        </div>
+    </div>
+</div>

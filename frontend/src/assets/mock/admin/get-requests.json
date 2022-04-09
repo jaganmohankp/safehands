@@ -1,0 +1,84 @@
+{
+    "status":"SUCCESS",
+    "result":[
+        {
+            "id":9,
+            "foodItem":{
+                "id":106,
+                "category":"Baby Food",
+                "classification":"Baby Cereals",
+                "description":"Baby Cereals-250g-Halal",
+                "quantity":1,
+                "value":6.5
+            },
+            "requestCreationDate":"2018-03-19",
+            "requestedQuantity":1
+        },
+        {
+            "id":10,
+            "foodItem":{
+                "id":108,
+                "category":"Baby Food",
+                "classification":"Baby Cereals",
+                "description":"Baby Cereals-50g-Halal",
+                "quantity":1,
+                "value":2.0
+            },
+            "requestCreationDate":"2018-03-19",
+            "requestedQuantity":1
+        },
+        {
+            "id":11,
+            "foodItem":{
+                "id":107,
+                "category":"Baby Food",
+                "classification":"Baby Cereals",
+                "description":"Baby Cereals-450g",
+                "quantity":1,
+                "value":3.0
+            },
+            "requestCreationDate":"2018-03-19",
+            "requestedQuantity":1
+        },
+        {
+            "id":12,
+            "foodItem":{
+                "id":107,
+                "category":"Baby Food",
+                "classification":"Baby Cereals",
+                "description":"Baby Cereals-450g",
+                "quantity":1,
+                "value":3.0
+            },
+            "requestCreationDate":"2018-03-19",
+            "requestedQuantity":1
+        },
+        {
+            "id":13,
+            "foodItem":{
+                "id":108,
+                "category":"Baby Food",
+                "classification":"Baby Cereals",
+                "description":"Baby Cereals-50g-Halal",
+                "quantity":1,
+                "value":2.0
+            },
+            "requestCreationDate":"2018-03-19",
+            "requestedQuantity":1
+        },
+        {
+            "id":14,
+            "foodItem":{
+                "id":106,
+                "category":"Baby Food",
+                "classification":"Baby Cereals",
+                "description":"Baby Cereals-250g-Halal",
+                "quantity":1,
+                "value":6.5
+            },
+            "requestCreationDate":"2018-03-19",
+            "requestedQuantity":1
+        }
+    ],
+    "message":"GET call for REQUEST is successful"
+}

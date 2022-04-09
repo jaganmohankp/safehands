@@ -1,0 +1,192 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-block">
+            <div class="row">
+                <div class="col-lg-4 dropdown">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <label>Group by: </label>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="input-wrapper">
+                                <select [(ngModel)]="selectedGroup">
+                                    <option *ngFor="let group of groups">{{ group }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-3 order-lg-1">
+                    <button type="button" class="btn btn-success add-new" (click)="onApprove()" [disabled]="!validAllocation || approvalStatus">
+                        <span class="fas fa-check fa-fw"></span>
+                        <span>Approve All</span>
+                    </button>
+                </div>
+                <div class="col-lg-3 order-lg-2">
+                    <div class="input-group">
+                        <input type="text" class="searchbar" placeholder="Search" (keyup)="onFilter(true)" [(ngModel)]="criteria">
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="selectedGroup === 'Beneficiary'">
+                <div style="overflow-x:auto;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let header of benHeaders" [ngClass]="{'text-center': header === '# of Item Requests'}">{{ header }}</th>
+                                <th class="text-center">#</th>
+                                <th colspan="3">Beneficiary</th>
+                                <th class="text-center"># of Requests</th>
+                                <th colspan="4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let ben of benPager.data; let i = index">
+                                <tr style="border-top:1px solid #e9ecef">
+                                    <td class="text-center">{{ ben.sn }}</td>
+                                    <td colspan="3">{{ ben.name }}</td>
+                                    <td class="text-center">{{ ben.allocatedItems.length }}</td>
+                                    <td colspan="3"></td>
+                                    <td class="pull-right" style="border-top:none;">
+                                        <button class="btn-caret" (click)="ben.toggle = !ben.toggle">
+                                            <span class="fas fa-caret-down"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="ben.toggle">
+                                    <tr><td colspan="9" class="trench"></td></tr>
+                                    <tr class="nested-table-header">
+                                        <td class="trench"></td>
+                                        <th>Category</th>
+                                        <th>Classification</th>
+                                        <th>Description</th>
+                                        <th class="text-center">Measurement</th>
+                                        <th class="text-center">Inventory Quantity</th>
+                                        <th class="text-center">Requested Quantity</th>
+                                        <th class="text-center">Allocated Quantity</th>
+                                        <td class="trench"></td>
+                                    </tr>
+                                    <tr *ngFor="let item of ben?.allocatedItems">
+                                        <td class="trench"></td>
+                                        <td>{{ item.category }}</td>
+                                        <td>{{ item.classification }}</td>
+                                        <td>{{ item.description | split:'-':'0' }}<span *ngIf="item.description.includes('Halal')"> ({{ item.description | split:'-':'2' }})</span></td>
+                                        <td class="text-center">{{ item.description | split:'-':'1' }}</td>
+                                        <td class="text-center">{{ item.inventoryQuantity }}</td>
+                                        <td class="text-center">{{ item.requestedQuantity }}</td>
+                                        <td class="text-center">{{ item.allocatedQuantity }}</td>
+                                        <td class="trench"></td>
+                                    </tr>
+                                    <tr><td colspan="9" class="trench"></td></tr>
+                                </ng-container>
+                            </ng-container>
+                            <tr *ngIf="benPager.data.length === 0"><td colspan="9" class="text-center"><strong>None</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <pagination
+                    [count]="benGroupData?.length"
+                    [page]="benPager.page"
+                    [pagesToShow]="benPager.pagesToShow"
+                    [perPage]="benPager.pageSize"
+                    (pageSizeChange)="pgSvc.loadPage(benGroupData, benPager, $event)"
+                    (goPrev)="pgSvc.prev(data, benPager)"
+                    (goNext)="pgSvc.next(data, benPager)"
+                    (goPage)="pgSvc.go(data, benPager, $event)">
+                </pagination>
+            </div>
+            <div *ngIf="selectedGroup === 'Description'">
+                <div style="overflow-x:auto;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Category</th>
+                                <th>Classification</th>
+                                <th>Description</th>
+                                <th class="text-center">Measurement</th>
+                                <th class="text-center"># of Requests</th>
+                                <th class="text-center">Inventory Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let item of descPager.data; let i = index">
+                                <tr>
+                                    <td>{{ item.sn }}</td>
+                                    <td>{{ item.category }}</td>
+                                    <td>{{ item.classification }}</td>
+                                    <td>{{ item.description | split:'-':'0' }}<span *ngIf="item.description.includes('Halal')"> ({{ item.description | split:'-':'2' }})</span></td>
+                                    <td class="text-center">{{ item.description | split:'-':'1' }}</td>
+                                    <td class="text-center">{{ item.value.length }}</td>
+                                    <td class="text-center">{{ item.inventoryQuantity }}</td>
+                                    <td>
+                                        <button class="btn-caret" (click)="item.toggle = !item.toggle">
+                                            <span class="fa fa-caret-down"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <ng-container *ngIf="item.toggle">
+                                    <tr><td colspan="8" class="trench"></td></tr>
+                                    <tr class="nested-table-header">
+                                        <td class="trench"></td>
+                                        <th colspan="3">Beneficiary</th>
+                                        <th class="text-center">Requested Quantity</th>
+                                        <th class="text-center">Allocated Quantity</th>
+                                        <th class="text-center">Action</th>
+                                        <td class="trench"></td>
+                                    </tr>
+                                    <tr *ngFor="let row of item.value">
+                                        <td class="trench"></td>
+                                        <td colspan="3">{{ row.name }}</td>
+                                        <td class="text-center">{{ row.requestQuantity }}</td>
+                                        <td class="text-center" *ngIf="!row.edit">{{ row.allocatedQuantity }}</td>
+                                        <td class="text-center" *ngIf="row.edit">
+                                            <input
+                                                OnlyNumber="true"
+                                                [(ngModel)]="row.allocatedQuantity"
+                                                class="tb-width text-center"
+                                                (keyup)="onInputChange($event, item, row)"
+                                            />
+                                            <span
+                                                *ngIf="!row.valid || row.empty"
+                                                class="fas fa-fw fa-exclamation-circle win-inactive"
+                                                [matTooltip]="row.error"
+                                                matTooltipPosition="after"
+                                            ></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <button
+                                                class="btn btn-std inv-action"
+                                                (click)="toggleEdit(row, item)"
+                                                [disabled]="!row.valid || row.empty || approvalStatus"
+                                                [ngClass]="row.edit ? 'btn-success' : 'btn-secondary'"
+                                            >
+                                                <span class="{{ row.icon }}"></span>
+                                                <span class="shorten">{{ row.edit ? 'Update' : 'Edit' }}</span>
+                                            </button>
+                                        </td>
+                                        <td class="trench"></td>
+                                    </tr>
+                                    <tr><td colspan="8" class="trench"></td></tr>
+                                </ng-container>
+                            </ng-container>
+                            <tr *ngIf="descPager.data.length === 0" class="text-center"><td colspan="9"><strong>None</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <pagination
+                    [count]="descGroupData?.length"
+                    [page]="descPager.page"
+                    [pagesToShow]="descPager.pagesToShow"
+                    [perPage]="descPager.pageSize"
+                    (pageSizeChange)="pgSvc.loadPage(descGroupData, descPager, $event)"
+                    (goPrev)="pgSvc.prev(descGroupData, descPager)"
+                    (goNext)="pgSvc.next(descGroupData, descPager)"
+                    (goPage)="pgSvc.go(descGroupData, descPager, $event)">
+                </pagination>
+            </div>
+        </div>
+    </div>
+</div>
